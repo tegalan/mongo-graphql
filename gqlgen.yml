@@ -1,6 +1,6 @@
 # Where are all the schema files located? globs are supported eg  src/**/*.graphqls
 schema:
-  - graph/*.graphqls
+  - graph/schema/*.graphqls
 
 # Where should the generated server code go?
 exec:
@@ -37,6 +37,7 @@ resolver:
 autobind:
   - "mongo-graph/graph/model"
   - "mongo-graph/services/user"
+  - "mongo-graph/services/post"
 
 # This section declares type mapping between the GraphQL and go type systems
 #

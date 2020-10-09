@@ -4,18 +4,33 @@ type User {
   id: String!
   name: String!
   email: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: String!
+  title: String!
+  body: String!
 }
 
 type Query {
   users: [User!]!
   user(id: String!): User!
+  posts: [Post!]!
 }
 
 type Mutation {
   createUser(input: NewUser!): User!
+  createPost(input: NewPost!): Post!
 }
 
 input NewUser {
    name: String!
    email: String!
+}
+
+input NewPost {
+  title: String!
+  body: String!
+  userId: String!
 }

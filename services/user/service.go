@@ -11,8 +11,8 @@ import (
 
 // Service struct
 type Service interface {
-	FindByID(string) *User
-	All() []*User
+	FindByID(string) (*User, error)
+	All() ([]*User, error)
 	Create(*User) error
 }
 
@@ -27,23 +27,28 @@ func NewUserService(db *mongo.Database) Service {
 }
 
 // FindByID implementation
-func (s *MongoService) FindByID(id string) *User {
+func (s *MongoService) FindByID(id string) (*User, error) {
 	objID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		fmt.Printf("FindByID error parse id: %s ->%s\n", id, err.Error())
+		return nil, err
 	}
 
 	var u User
 	if err := s.db.Collection("users").FindOne(context.TODO(), bson.M{"_id": objID}).Decode(&u); err != nil {
 		fmt.Printf("FindByID errr: %s %v \n", err.Error(), bson.M{"_id": objID})
-		return nil
+		return nil, err
 	}
-	return &u
+	return &u, nil
 }
 
 // All user impl
-func (s *MongoService) All() []*User {
-	res, _ := s.db.Collection("users").Find(context.TODO(), bson.M{})
+func (s *MongoService) All() ([]*User, error) {
+	res, err := s.db.Collection("users").Find(context.TODO(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
 	var users []*User
 	for res.Next(context.TODO()) {
 		var user User
@@ -52,7 +57,7 @@ func (s *MongoService) All() []*User {
 		users = append(users, &user)
 	}
 
-	return users
+	return users, nil
 }
 
 // Create implementation

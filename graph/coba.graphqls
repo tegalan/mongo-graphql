@@ -1,7 +1,0 @@
-type Coba {
-    ID: String!
-}
-
-type CobaQuery {
-    coba: [Coba!]!
-}

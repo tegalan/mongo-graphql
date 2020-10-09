@@ -1,6 +1,9 @@
 package graph
 
-import "mongo-graph/services/user"
+import (
+	"mongo-graph/services/post"
+	"mongo-graph/services/user"
+)
 
 // This file will not be regenerated automatically.
 //
@@ -9,4 +12,5 @@ import "mongo-graph/services/user"
 // Resolver struct
 type Resolver struct {
 	UserService user.Service
+	PostService post.Service
 }

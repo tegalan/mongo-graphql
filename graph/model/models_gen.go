@@ -2,12 +2,10 @@
 
 package model
 
-type Coba struct {
-	ID string `json:"ID"`
-}
-
-type CobaQuery struct {
-	Coba []*Coba `json:"coba"`
+type NewPost struct {
+	Title  string `json:"title"`
+	Body   string `json:"body"`
+	UserID string `json:"userId"`
 }
 
 type NewUser struct {
